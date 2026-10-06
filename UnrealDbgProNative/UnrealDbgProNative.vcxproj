@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7F4DBB87-B7D8-4FB2-BFDE-25268B8EFB4E}</ProjectGuid>
+    <RootNamespace>UnrealDbgProNative</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>UnrealDbgProNative</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(MSBuildThisFileDirectory)..\x64\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)x64\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(MSBuildThisFileDirectory)..\x64\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)x64\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Comctl32.lib;Ole32.lib;OleAut32.lib;Wbemuuid.lib;Psapi.lib;Version.lib;Advapi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalManifestFiles>$(ProjectDir)UnrealDbgProNative.manifest</AdditionalManifestFiles>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Comctl32.lib;Ole32.lib;OleAut32.lib;Wbemuuid.lib;Psapi.lib;Version.lib;Advapi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalManifestFiles>$(ProjectDir)UnrealDbgProNative.manifest</AdditionalManifestFiles>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="UnrealDbgNative.cpp" />
+    <ClInclude Include="Core.h" />
+    <Manifest Include="UnrealDbgProNative.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnrealDbgProDll\UnrealDbgProDll.vcxproj">
+      <Project>{FC047E85-1CAF-4668-A4A2-E3F7501C8BEA}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <!-- 这些项目提供 bin 中的注入组件和驱动。声明为构建依赖，
+         使整理目标在所有运行产物生成后执行，即使启用 /m 并行构建也不会
+         有项目在整理完成后再次把 DLL/SYS 写回发布根目录。 -->
+    <ProjectReference Include="..\Hook\Hook.vcxproj">
+      <Project>{413FDE8A-1144-4C1B-B6FD-354227A78848}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\DbgkSysWin10\DbgkSysWin10.vcxproj">
+      <Project>{C26EF961-AABF-4107-BD02-C4D5CAF155D8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\DbgkSysWin11\DbgkSysWin11.vcxproj">
+      <Project>{6D281073-FCA3-45A1-935A-1604CEDBBE79}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\VT_Driver\VT_Driver.vcxproj">
+      <Project>{B41C66E0-04F8-4049-B41F-5A0D15B1DAD7}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\Loader\Loader.vcxproj">
+      <Project>{105B7E21-03C4-414D-A060-5AABB4D708FE}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="CopyNativeRuntimeDependencies" AfterTargets="Build">
+    <MakeDir Directories="$(OutDir)bin;$(OutDir)Config;$(OutDir)Symbols;$(OutDir)Certificates" />
+    <ItemGroup>
+      <!-- 运行 DLL、注入 DLL 和驱动统一放入 bin；UnrealDbgDll 会以自身模块目录解析这些文件。 -->
+      <RuntimeDependency Include="$(OutDir)UnrealDbgProDll.dll" Condition="Exists('$(OutDir)UnrealDbgProDll.dll')">
+        <DestinationFile>$(OutDir)bin\UnrealDbgProDll.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.dll" Condition="!Exists('$(OutDir)UnrealDbgProDll.dll') and Exists('$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.dll')">
+        <DestinationFile>$(OutDir)bin\UnrealDbgProDll.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\x64\$(Configuration)\D-encryption.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\x64\$(Configuration)\D-encryption.dll')">
+        <DestinationFile>$(OutDir)bin\D-encryption.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\D-encryptiondll\x64\$(Configuration)\D-encryption.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\x64\$(Configuration)\D-encryption.dll') and Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\x64\$(Configuration)\D-encryption.dll')">
+        <DestinationFile>$(OutDir)bin\D-encryption.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\Hook\x64\$(Configuration)\Hook64.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\Hook\x64\$(Configuration)\Hook64.dll')">
+        <DestinationFile>$(OutDir)bin\Hook64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)Hook64.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\Hook\x64\$(Configuration)\Hook64.dll') and Exists('$(OutDir)Hook64.dll')">
+        <DestinationFile>$(OutDir)bin\Hook64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin10.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)DbgkSysWin10.sys" Condition="!Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.sys') and Exists('$(OutDir)DbgkSysWin10.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin10.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin11.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)DbgkSysWin11.sys" Condition="!Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.sys') and Exists('$(OutDir)DbgkSysWin11.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin11.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.sys')">
+        <DestinationFile>$(OutDir)bin\VT_Driver.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)VT_Driver.sys" Condition="!Exists('$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.sys') and Exists('$(OutDir)VT_Driver.sys')">
+        <DestinationFile>$(OutDir)bin\VT_Driver.sys</DestinationFile>
+      </RuntimeDependency>
+      <!-- AIHelper/VMProtect 是外部运行时组件；若构建机已有副本，复制到 bin。 -->
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\AIHelper.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\AIHelper.dll')">
+        <DestinationFile>$(OutDir)bin\AIHelper.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\Release\AIHelper.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\AIHelper.dll') and Exists('$(MSBuildThisFileDirectory)..\x64\Release\AIHelper.dll')">
+        <DestinationFile>$(OutDir)bin\AIHelper.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)AIHelper.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\AIHelper.dll') and !Exists('$(MSBuildThisFileDirectory)..\x64\Release\AIHelper.dll') and Exists('$(OutDir)AIHelper.dll')">
+        <DestinationFile>$(OutDir)bin\AIHelper.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\VMProtectSDK64.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\VMProtectSDK64.dll')">
+        <DestinationFile>$(OutDir)bin\VMProtectSDK64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\Release\VMProtectSDK64.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\VMProtectSDK64.dll') and Exists('$(MSBuildThisFileDirectory)..\x64\Release\VMProtectSDK64.dll')">
+        <DestinationFile>$(OutDir)bin\VMProtectSDK64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(OutDir)VMProtectSDK64.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\VMProtectSDK64.dll') and !Exists('$(MSBuildThisFileDirectory)..\x64\Release\VMProtectSDK64.dll') and Exists('$(OutDir)VMProtectSDK64.dll')">
+        <DestinationFile>$(OutDir)bin\VMProtectSDK64.dll</DestinationFile>
+      </RuntimeDependency>
+    </ItemGroup>
+    <Copy SourceFiles="@(RuntimeDependency)" DestinationFiles="@(RuntimeDependency->'%(DestinationFile)')" SkipUnchangedFiles="true" Condition="'@(RuntimeDependency)'!=''" />
+    <ItemGroup>
+      <ConfigDependency Include="$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\copyright.db" Condition="Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\copyright.db')" />
+      <ConfigDependency Include="$(MSBuildThisFileDirectory)..\copyright.db" Condition="!Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\copyright.db') and Exists('$(MSBuildThisFileDirectory)..\copyright.db')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ConfigDependency)" DestinationFolder="$(OutDir)Config" SkipUnchangedFiles="true" Condition="'@(ConfigDependency)'!=''" />
+    <ItemGroup>
+      <!-- 驱动项目本次构建生成的证书必须与 SYS 成套复制到发布目录。 -->
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.cer')" />
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.cer')" />
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.cer')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FreshCertificate)" DestinationFolder="$(OutDir)Certificates" SkipUnchangedFiles="true" Condition="'@(FreshCertificate)'!=''" />
+    <!-- 编译器生成的 PDB/LIB/EXP 只用于诊断和链接，移出运行根目录。 -->
+    <ItemGroup>
+      <RootSymbolOutput Include="$(OutDir)*.pdb;$(OutDir)*.lib;$(OutDir)*.exp" />
+      <SymbolOutput Include="@(RootSymbolOutput)" />
+      <SymbolOutput Include="$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.pdb" Condition="Exists('$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.pdb')" />
+      <SymbolOutput Include="$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.lib" Condition="Exists('$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.lib')" />
+      <SymbolOutput Include="$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.exp" Condition="Exists('$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.exp')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SymbolOutput)" DestinationFolder="$(OutDir)Symbols" SkipUnchangedFiles="true" Condition="'@(SymbolOutput)'!=''" />
+    <Delete Files="@(RootSymbolOutput)" />
+    <!-- 某些项目在解决方案构建时仍将产物写入公共 OutDir；复制完成后
+         清掉这些重复运行文件，防止下一次编译重新污染发布根目录。 -->
+    <Delete Files="$(OutDir)AIHelper.dll;$(OutDir)D-encryption.dll;$(OutDir)Hook64.dll;$(OutDir)VMProtectSDK64.dll;$(OutDir)UnrealDbgProDll.dll;$(OutDir)DbgkSysWin10.sys;$(OutDir)DbgkSysWin11.sys;$(OutDir)VT_Driver.sys;$(OutDir)copyright.db;$(OutDir)DbgkSysWin10.cer;$(OutDir)DbgkSysWin11.cer;$(OutDir)VT_Driver.cer" />
+    <!-- WDK 的默认打包步骤还可能创建同名子目录并放入一份重复 SYS；
+         bin 已是唯一运行位置，清理这些空的历史输出目录。 -->
+    <Delete Files="$(OutDir)DbgkSysWin10\DbgkSysWin10.sys;$(OutDir)DbgkSysWin11\DbgkSysWin11.sys;$(OutDir)VT_Driver\VT_Driver.sys" />
+    <RemoveDir Directories="$(OutDir)DbgkSysWin10;$(OutDir)DbgkSysWin11;$(OutDir)VT_Driver" />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

@@ -1,0 +1,98 @@
+# Prerequisites
+*.d
+
+# IDE folders
+.vs/
+.vscode/
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+/D-encryptiondll/.vs
+/VT_Driver/x64
+
+# Visual Studio/WDK build outputs and runtime diagnostics
+DbgkSysWin10/x64/
+DbgkSysWin11/x64/
+Hook/x64/
+Loader/x64/
+SymbolTool/x64/
+UnrealDbgProDll/x64/
+UnrealDbgProNative/x64/
+VT_Driver/x64/
+**/x64/
+*.pdb
+*.exp
+*.cer
+*.log
+/_artifacts/
+
+# Driver files
+*.sys
+*.cat
+
+# Delphi IDE auto-backup
+**/__history/
+*.~*
+
+# Delphi IDE cache
+*.identcache
+*.dproj.local
+*.groupproj.local
+
+# Visual Studio user config
+*.vcxproj.user
+*.aps
+*.suo
+
+# Encrypted / copyright data
+*.aes
+copyright.db
+
+# Desktop shortcuts
+*.lnk
+
+# Visual Studio IDE cache (any module)
+.vs/
+ipch/
+
+# Archives — may contain build artifacts or private release packages
+*.rar
+*.zip
+*.7z
+
+# MSVC build intermediates (outside x64/ as well)
+*.tlog
+*.lastbuildstate
+*.recipe
+*.iobj
+*.ipdb
+
+# Private release / restricted assets — kept out by the **/x64/ rule above.
+# Do NOT add narrow exceptions here: anything under x64/ must stay untracked.

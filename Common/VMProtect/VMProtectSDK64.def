@@ -1,0 +1,24 @@
+LIBRARY VMProtectSDK64
+EXPORTS
+    VMProtectBegin
+    VMProtectBeginVirtualization
+    VMProtectBeginMutation
+    VMProtectBeginUltra
+    VMProtectBeginVirtualizationLockByKey
+    VMProtectBeginUltraLockByKey
+    VMProtectEnd
+    VMProtectIsProtected
+    VMProtectIsDebuggerPresent
+    VMProtectIsVirtualMachinePresent
+    VMProtectIsValidImageCRC
+    VMProtectDecryptStringA
+    VMProtectDecryptStringW
+    VMProtectFreeString
+    VMProtectSetSerialNumber
+    VMProtectGetSerialNumberState
+    VMProtectGetSerialNumberData
+    VMProtectGetCurrentHWID
+    VMProtectActivateLicense
+    VMProtectDeactivateLicense
+    VMProtectGetOfflineActivationString
+    VMProtectGetOfflineDeactivationString

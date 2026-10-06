@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7B4A7F9C-5989-4C57-AF4A-5B2A06BD2E18}</ProjectGuid>
+    <RootNamespace>UnrealDbgProNativeWinUI</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <WindowsAppSDKPackageDir>$(MSBuildThisFileDirectory)..\_artifacts\winui_packages\sdk\</WindowsAppSDKPackageDir>
+    <CppWinRTPackageDir>$(MSBuildThisFileDirectory)..\_artifacts\winui_packages\cppwinrt\</CppWinRTPackageDir>
+    <CppWinRTPackage>true</CppWinRTPackage>
+    <WindowsAppSDKVerifyTransitiveDependencies>false</WindowsAppSDKVerifyTransitiveDependencies>
+    <CppWinRTOverrideSDKReferences>true</CppWinRTOverrideSDKReferences>
+    <CppWinRTEnablePlatformProjection>false</CppWinRTEnablePlatformProjection>
+    <CppWinRTEnableReferenceProjection>true</CppWinRTEnableReferenceProjection>
+    <ProjectName>UnrealDbgProNativeWinUI</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="ValidateWinUIPackages" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(WindowsAppSDKPackageDir)build\native\Microsoft.WindowsAppSDK.props')" Text="缺少 WinUI 3 依赖，请先运行 UnrealDbgNative\RestoreWinUiPackages.ps1。" />
+    <Error Condition="!Exists('$(CppWinRTPackageDir)bin\cppwinrt.exe')" Text="缺少 C++/WinRT 投影工具，请先运行 UnrealDbgNative\RestoreWinUiPackages.ps1。" />
+  </Target>
+  <Import Project="$(WindowsAppSDKPackageDir)build\native\Microsoft.WindowsAppSDK.props" />
+  <Import Project="$(CppWinRTPackageDir)build\native\Microsoft.Windows.CppWinRT.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)..\x64\WinUI\Debug\</OutDir>
+    <IntDir>$(ProjectDir)x64\WinUI\Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)..\x64\WinUI\Release\</OutDir>
+    <IntDir>$(ProjectDir)x64\WinUI\Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4002;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)'=='Release'">MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(WindowsAppSDKPackageDir)include;$(WindowsAppSDKPackageDir)metadata;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Microsoft.WindowsAppRuntime.Bootstrap.lib;Microsoft.WindowsAppRuntime.lib;windowsapp.lib;Ole32.lib;OleAut32.lib;Wbemuuid.lib;Psapi.lib;Version.lib;Advapi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(WindowsAppSDKPackageDir)lib\native\x64;$(WindowsAppSDKPackageDir)lib\native\win10-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="WinUiMain.cpp" />
+    <ClCompile Include="UiComponents.cpp" />
+    <ClCompile Include="LogPanel.cpp" />
+    <ClCompile Include="WinUiController.cpp" />
+    <ClCompile Include="SymbolCache.cpp" />
+    <ClCompile Include="Core.cpp" />
+    <ClInclude Include="WinUiController.h" />
+    <ClInclude Include="UiTheme.h" />
+    <ClInclude Include="UiComponents.h" />
+    <ClInclude Include="LogPanel.h" />
+    <ClInclude Include="SymbolCache.h" />
+    <ClInclude Include="Core.h" />
+    <Reference Include="$(WindowsAppSDKPackageDir)metadata\**\*.winmd">
+      <WinMDFile>true</WinMDFile>
+      <CopyLocal>false</CopyLocal>
+    </Reference>
+    <Reference Include="C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
+      <WinMDFile>true</WinMDFile>
+      <CopyLocal>false</CopyLocal>
+    </Reference>
+    <Reference Include="C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\**\*.winmd">
+      <WinMDFile>true</WinMDFile>
+      <CopyLocal>false</CopyLocal>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnrealDbgProDll\UnrealDbgProDll.vcxproj">
+      <Project>{FC047E85-1CAF-4668-A4A2-E3F7501C8BEA}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\Hook\Hook.vcxproj">
+      <Project>{413FDE8A-1144-4C1B-B6FD-354227A78848}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\DbgkSysWin10\DbgkSysWin10.vcxproj">
+      <Project>{C26EF961-AABF-4107-BD02-C4D5CAF155D8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\DbgkSysWin11\DbgkSysWin11.vcxproj">
+      <Project>{6D281073-FCA3-45A1-935A-1604CEDBBE79}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\VT_Driver\VT_Driver.vcxproj">
+      <Project>{B41C66E0-04F8-4049-B41F-5A0D15B1DAD7}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="..\Loader\Loader.vcxproj">
+      <Project>{105B7E21-03C4-414D-A060-5AABB4D708FE}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="CopyWinUIBootstrap" AfterTargets="Build">
+    <Copy SourceFiles="$(WindowsAppSDKPackageDir)runtimes\win-x64\native\Microsoft.WindowsAppRuntime.Bootstrap.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <MakeDir Directories="$(OutDir)bin" />
+    <MakeDir Directories="$(OutDir)Config;$(OutDir)Certificates" />
+    <!--
+      WinUI 项目直接构建时，项目引用会把最新文件写入各自的 x64\$(Configuration)
+      目录；不能再用旧版 x64\Release\bin 的通配符覆盖它们（尤其是
+      UnrealDbgDll.dll 的导出表和驱动安全修复）。每个项目产物都显式指定来源，
+      只有外部运行时组件才从历史 bin 目录回退复制。
+    -->
+    <ItemGroup>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\UnrealDbgProDll\x64\$(Configuration)\UnrealDbgProDll.dll')">
+        <DestinationFile>$(OutDir)bin\UnrealDbgProDll.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\D-encryptiondll\x64\$(Configuration)\D-encryption.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\x64\$(Configuration)\D-encryption.dll')">
+        <DestinationFile>$(OutDir)bin\D-encryption.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\x64\$(Configuration)\D-encryption.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\x64\$(Configuration)\D-encryption.dll') and Exists('$(MSBuildThisFileDirectory)..\D-encryptiondll\D-encryption\x64\$(Configuration)\D-encryption.dll')">
+        <DestinationFile>$(OutDir)bin\D-encryption.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\Hook\x64\$(Configuration)\Hook64.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\Hook\x64\$(Configuration)\Hook64.dll')">
+        <DestinationFile>$(OutDir)bin\Hook64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin10.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.sys')">
+        <DestinationFile>$(OutDir)bin\DbgkSysWin11.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.sys" Condition="Exists('$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.sys')">
+        <DestinationFile>$(OutDir)bin\VT_Driver.sys</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\AIHelper.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\AIHelper.dll')">
+        <DestinationFile>$(OutDir)bin\AIHelper.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\Release\bin\AIHelper.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\AIHelper.dll') and Exists('$(MSBuildThisFileDirectory)..\x64\Release\bin\AIHelper.dll')">
+        <DestinationFile>$(OutDir)bin\AIHelper.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\VMProtectSDK64.dll" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\VMProtectSDK64.dll')">
+        <DestinationFile>$(OutDir)bin\VMProtectSDK64.dll</DestinationFile>
+      </RuntimeDependency>
+      <RuntimeDependency Include="$(MSBuildThisFileDirectory)..\x64\Release\bin\VMProtectSDK64.dll" Condition="!Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\bin\VMProtectSDK64.dll') and Exists('$(MSBuildThisFileDirectory)..\x64\Release\bin\VMProtectSDK64.dll')">
+        <DestinationFile>$(OutDir)bin\VMProtectSDK64.dll</DestinationFile>
+      </RuntimeDependency>
+    </ItemGroup>
+    <Copy SourceFiles="@(RuntimeDependency)" DestinationFiles="@(RuntimeDependency->'%(DestinationFile)')" SkipUnchangedFiles="true" Condition="'@(RuntimeDependency)'!=''" />
+    <ItemGroup>
+      <ExistingConfig Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\Config\*.*" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\Config')" />
+      <ExistingCertificates Include="$(MSBuildThisFileDirectory)..\x64\$(Configuration)\Certificates\*.*" Condition="Exists('$(MSBuildThisFileDirectory)..\x64\$(Configuration)\Certificates')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ExistingConfig)" DestinationFolder="$(OutDir)Config" SkipUnchangedFiles="true" Condition="'@(ExistingConfig)'!=''" />
+    <Copy SourceFiles="@(ExistingCertificates)" DestinationFolder="$(OutDir)Certificates" SkipUnchangedFiles="true" Condition="'@(ExistingCertificates)'!=''" />
+    <ItemGroup>
+      <!-- 驱动项目每次 WDK 构建都会在各自输出目录生成配套测试证书；
+           优先复制本次构建的证书，避免发布包混入历史证书。 -->
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin10\x64\$(Configuration)\DbgkSysWin10.cer')" />
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\DbgkSysWin11\x64\$(Configuration)\DbgkSysWin11.cer')" />
+      <FreshCertificate Include="$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.cer" Condition="Exists('$(MSBuildThisFileDirectory)..\VT_Driver\x64\$(Configuration)\VT_Driver.cer')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FreshCertificate)" DestinationFolder="$(OutDir)Certificates" SkipUnchangedFiles="true" Condition="'@(FreshCertificate)'!=''" />
+    <MakeDir Directories="$(OutDir)Symbols" />
+    <ItemGroup>
+      <GeneratedMetadata Include="$(OutDir)*.winmd;$(OutDir)*.xml" />
+      <GeneratedSymbols Include="$(OutDir)*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GeneratedSymbols)" DestinationFolder="$(OutDir)Symbols" SkipUnchangedFiles="true" Condition="'@(GeneratedSymbols)'!=''" />
+    <Delete Files="@(GeneratedMetadata);@(GeneratedSymbols)" />
+  </Target>
+  <Target Name="OrganizeWinUISymbols" AfterTargets="CopyWinUIBootstrap">
+    <MakeDir Directories="$(OutDir)Symbols" />
+    <ItemGroup>
+      <LateSymbols Include="$(OutDir)*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(LateSymbols)" DestinationFolder="$(OutDir)Symbols" SkipUnchangedFiles="true" Condition="'@(LateSymbols)'!=''" />
+    <Delete Files="@(LateSymbols)" />
+  </Target>
+  <Target Name="OrganizeWinUIArtifacts" AfterTargets="Link">
+    <MakeDir Directories="$(OutDir)Symbols" />
+    <ItemGroup>
+      <LinkArtifacts Include="$(OutDir)UnrealDbgProNativeWinUI.pdb;$(OutDir)UnrealDbgProNativeWinUI.lib;$(OutDir)UnrealDbgProNativeWinUI.exp" Condition="Exists('%(FullPath)')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(LinkArtifacts)" DestinationFiles="@(LinkArtifacts->'$(OutDir)Symbols\%(Filename)%(Extension)')" SkipUnchangedFiles="true" Condition="'@(LinkArtifacts)'!=''" />
+    <Delete Files="@(LinkArtifacts)" />
+    <!-- 旧版 WinUI 验证构建留下的 CopyVerify 文件不是运行时依赖，
+         每次构建都清掉，避免再次污染精简发布根目录。 -->
+    <Delete Files="$(OutDir)UnrealDbgProNativeWinUI_CopyVerify.exe;$(OutDir)UnrealDbgProNativeWinUI_CopyVerify.lib;$(OutDir)UnrealDbgProNativeWinUI_CopyVerify.exp" />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(CppWinRTPackageDir)build\native\Microsoft.Windows.CppWinRT.targets" />
+  <Import Project="$(WindowsAppSDKPackageDir)build\native\Microsoft.WindowsAppSDK.targets" />
+</Project>

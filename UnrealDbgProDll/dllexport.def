@@ -1,0 +1,7 @@
+LIBRARY "UnrealDbgDll.dll"
+EXPORTS
+Initialize @1
+StartProcess @2
+GetFileVersion @3
+TL_BlockGameResumeThread @4
+Shutdown @5
