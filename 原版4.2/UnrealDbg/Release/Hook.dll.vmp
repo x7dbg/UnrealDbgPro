@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="Hook.dll" Options="786632" OutputFileName="Hook.dll">
+        <Messages />
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress='VMProtectMarker &quot;VMP&quot;' Options="0" />
+        </Procedures>
+        <Objects />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager />
+</Document>

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\Channels">
+      <UniqueIdentifier>{af22a656-e801-4403-9208-3b7f01d5f73b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Channels">
+      <UniqueIdentifier>{93eb0c08-40e5-4958-922f-3a9460b2535e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Init">
+      <UniqueIdentifier>{e7997350-8ce9-46ab-ae63-2926cb710ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Init">
+      <UniqueIdentifier>{20b4b62f-e882-4405-a4ca-f2902cbb8870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common">
+      <UniqueIdentifier>{9ada8595-44f1-48f4-92c3-a760e933ec73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common">
+      <UniqueIdentifier>{942e79b9-d71a-4228-b343-7e90dfd73832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\FileSystem">
+      <UniqueIdentifier>{6e5493aa-d210-4517-ae9a-e6aeeb7dff7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\FileSystem">
+      <UniqueIdentifier>{3192dae2-b880-4062-96f2-57d10dede56e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Shared">
+      <UniqueIdentifier>{f4bc19c9-dea0-41cd-b596-60e6bf021358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Shared">
+      <UniqueIdentifier>{34c4e991-ed6b-4335-a693-ce6bb68ec221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Encrypt">
+      <UniqueIdentifier>{1f01c710-362a-4982-b85f-2393e0c75e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Encrypt">
+      <UniqueIdentifier>{5fe614fd-5f99-4560-9912-ad5dcd63f5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Encrypt\Blowfish">
+      <UniqueIdentifier>{55bba402-2acc-41fb-9e91-074314cef69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Encrypt\Blowfish">
+      <UniqueIdentifier>{bc0d93f2-51ca-4f13-a89b-accbd0bef650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Logger">
+      <UniqueIdentifier>{512e0810-60e3-47d6-8b58-943fc0cfd4ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Logger">
+      <UniqueIdentifier>{93f8cb12-a458-40d0-a3e4-329db7d58e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Interface">
+      <UniqueIdentifier>{f6896951-c739-4881-a539-804a8670db13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Interface">
+      <UniqueIdentifier>{283d1f01-9b24-4327-8bd4-f35764d56451}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Channels\DispatchData.cpp">
+      <Filter>源文件\Channels</Filter>
+    </ClCompile>
+    <ClCompile Include="Init\InitNTDevice.cpp">
+      <Filter>源文件\Init</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\FileSystem\FileSystem.cpp">
+      <Filter>源文件\Common\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Encrypt\Blowfish\Blowfish.cpp">
+      <Filter>源文件\Common\Encrypt\Blowfish</Filter>
+    </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StartProcess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Logger\Logger.cpp">
+      <Filter>源文件\Common\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Interface.cpp">
+      <Filter>源文件\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dllmain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Channels\DispatchData.h">
+      <Filter>头文件\Channels</Filter>
+    </ClInclude>
+    <ClInclude Include="Init\InitNTDevice.h">
+      <Filter>头文件\Init</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\FileSystem\FileSystem.h">
+      <Filter>头文件\Common\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Shared\IOCTLs.h">
+      <Filter>头文件\Common\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Shared\SharedStruct.h">
+      <Filter>头文件\Common\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Encrypt\Blowfish\Blowfish.h">
+      <Filter>头文件\Common\Encrypt\Blowfish</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StartProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Logger\Logger.h">
+      <Filter>头文件\Common\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Interface.h">
+      <Filter>头文件\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

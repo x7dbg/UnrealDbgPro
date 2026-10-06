@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Driver Files">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+      <Extensions>inf;inv;inx;mof;mc;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Asm">
+      <UniqueIdentifier>{e78788c1-a6d7-4c70-94d6-beff9601e0d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Init">
+      <UniqueIdentifier>{37f4a8db-687a-4067-aa29-fab79e636165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Init\Symbolic">
+      <UniqueIdentifier>{a88775d7-04ce-4a88-a46f-b4708660c576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Init">
+      <UniqueIdentifier>{22190831-b44d-4489-a6ff-3a405f5632a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Init\Symbolic">
+      <UniqueIdentifier>{ffe52995-ab97-4953-a228-fb847d4ab745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{3771a03c-ee10-4ade-9696-4d3109c74716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\String">
+      <UniqueIdentifier>{7153b2a2-334f-414a-ba6f-2b03cadf03e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{46d884df-e460-420f-a0ab-f79d00eb0485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\String">
+      <UniqueIdentifier>{38a8230d-3685-4744-b5db-7a649c50cadf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="vmm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EPT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vmcs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vmexit_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hypervisor_routines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vmcall_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="invalid_ept.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="poolmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spinlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="invalid_vpid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="invalid_pcid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hypervisor_gateway.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gdt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Init\Symbolic\InitNtoskrnl.cpp">
+      <Filter>Source Files\Init\Symbolic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Ring0\String\StringHandler.cpp">
+      <Filter>Source Files\Common\String</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cpuid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllocateMem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EPT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ntapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="poolmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="msr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmcs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmexit_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hypervisor_routines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmcall_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interrupt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmcall_reason.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="invalid_ept.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AsmCallset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="segment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vm_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spinlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mtrr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="invalid_vpid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="invalid_pcid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hypervisor_gateway.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vmx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gdt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Init\Symbolic\InitNtoskrnl.h">
+      <Filter>Header Files\Init\Symbolic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Ring0\String\StringHandler.h">
+      <Filter>Header Files\Common\String</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="ASM\AsmCallset.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+    <MASM Include="ASM\lde64.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+    <MASM Include="ASM\interrupt-handlers.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+    <MASM Include="ASM\exception-routines.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+    <MASM Include="ASM\vm-launch.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+    <MASM Include="ASM\vm-exit.asm">
+      <Filter>Source Files\Asm</Filter>
+    </MASM>
+  </ItemGroup>
+</Project>

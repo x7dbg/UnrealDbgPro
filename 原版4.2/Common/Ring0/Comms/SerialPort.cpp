@@ -1,0 +1,463 @@
+#include <ntifs.h>
+#include <stdarg.h>
+#include "../Spinlock/spinlock.h"
+#include "SerialPort.h"
+
+volatile long sendstring_lock = 0;
+
+/*
+ * Implementation
+ */
+struct param {
+    char lz : 1;          /**<  Leading zeros */
+    char alt : 1;         /**<  alternate form */
+    char uc : 1;          /**<  Upper case (for base16 only) */
+    char align_left : 1;  /**<  0 == align right (default), 1 == align left */
+    unsigned int width; /**<  field width */
+    char sign;          /**<  The sign to display (if any) */
+    unsigned int base;  /**<  number base (e.g.: 8, 10, 16) */
+    char* bf;           /**<  Buffer to output */
+};
+
+struct _vsnprintf_putcf_data
+{
+    size_t dest_capacity;
+    char* dest;
+    size_t num_chars;
+};
+
+typedef void (*putcf) (void*, char);
+
+#ifdef PRINTF_LONG_LONG_SUPPORT
+static void ulli2a(
+    unsigned long long int num, struct param* p)
+{
+    int n = 0;
+    unsigned long long int d = 1;
+    char* bf = p->bf;
+    while (num / d >= p->base)
+        d *= p->base;
+    while (d != 0) {
+        int dgt = num / d;
+        num %= d;
+        d /= p->base;
+        if (n || dgt > 0 || d == 0) {
+            *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
+            ++n;
+        }
+    }
+    *bf = 0;
+}
+
+static void lli2a(long long int num, struct param* p)
+{
+    if (num < 0) {
+        num = -num;
+        p->sign = '-';
+    }
+    ulli2a(num, p);
+}
+#endif
+
+#ifdef PRINTF_LONG_SUPPORT
+static void uli2a(unsigned long int num, struct param* p)
+{
+    int n = 0;
+    unsigned long int d = 1;
+    char* bf = p->bf;
+    while (num / d >= p->base)
+        d *= p->base;
+    while (d != 0) {
+        int dgt = num / d;
+        num %= d;
+        d /= p->base;
+        if (n || dgt > 0 || d == 0) {
+            *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
+            ++n;
+        }
+    }
+    *bf = 0;
+}
+
+static void li2a(long num, struct param* p)
+{
+    if (num < 0) {
+        num = -num;
+        p->sign = '-';
+    }
+    uli2a(num, p);
+}
+#endif
+
+
+static void ui2a(unsigned int num, struct param* p)
+{
+    int n = 0;
+    unsigned int d = 1;
+    char* bf = p->bf;
+    while (num / d >= p->base)
+        d *= p->base;
+    while (d != 0) {
+        int dgt = num / d;
+        num %= d;
+        d /= p->base;
+        if (n || dgt > 0 || d == 0) {
+            *bf++ = dgt + (dgt < 10 ? '0' : (p->uc ? 'A' : 'a') - 10);
+            ++n;
+        }
+    }
+    *bf = 0;
+}
+
+static void i2a(int num, struct param* p)
+{
+    if (num < 0) {
+        num = -num;
+        p->sign = '-';
+    }
+    ui2a(num, p);
+}
+
+static int a2d(char ch)
+{
+    if (ch >= '0' && ch <= '9')
+        return ch - '0';
+    else if (ch >= 'a' && ch <= 'f')
+        return ch - 'a' + 10;
+    else if (ch >= 'A' && ch <= 'F')
+        return ch - 'A' + 10;
+    else
+        return -1;
+}
+
+static char a2u(char ch, const char** src, int base, unsigned int* nump)
+{
+    const char* p = *src;
+    unsigned int num = 0;
+    int digit;
+    while ((digit = a2d(ch)) >= 0) {
+        if (digit > base)
+            break;
+        num = num * base + digit;
+        ch = *p++;
+    }
+    *src = p;
+    *nump = num;
+    return ch;
+}
+
+
+static void putchw(void* putp, putcf putf, struct param* p)
+{
+    char ch;
+    int n = p->width;
+    char* bf = p->bf;
+
+    /* Number of filling characters */
+    while (*bf++ && n > 0)
+        n--;
+    if (p->sign)
+        n--;
+    if (p->alt && p->base == 16)
+        n -= 2;
+    else if (p->alt && p->base == 8)
+        n--;
+
+    /* Fill with space to align to the right, before alternate or sign */
+    if (!p->lz && !p->align_left) {
+        while (n-- > 0)
+            putf(putp, ' ');
+    }
+
+    /* print sign */
+    if (p->sign)
+        putf(putp, p->sign);
+
+    /* Alternate */
+    if (p->alt && p->base == 16) {
+        putf(putp, '0');
+        putf(putp, (p->uc ? 'X' : 'x'));
+    }
+    else if (p->alt && p->base == 8) {
+        putf(putp, '0');
+    }
+
+    /* Fill with zeros, after alternate or sign */
+    if (p->lz) {
+        while (n-- > 0)
+            putf(putp, '0');
+    }
+
+    /* Put actual buffer */
+    bf = p->bf;
+    while ((ch = *bf++))
+        putf(putp, ch);
+
+    /* Fill with space to align to the left, after string */
+    if (!p->lz && p->align_left) {
+        while (n-- > 0)
+            putf(putp, ' ');
+    }
+}
+
+void tfp_format(void* putp, putcf putf, const char* fmt, va_list va)
+{
+    struct param p;
+#ifdef PRINTF_LONG_SUPPORT
+    char bf[23];  /* long = 64b on some architectures */
+#else
+    char bf[12];  /* int = 32b on some architectures */
+#endif
+    char ch;
+    p.bf = bf;
+
+    while ((ch = *(fmt++))) {
+        if (ch != '%') {
+            putf(putp, ch);
+        }
+        else {
+#ifdef PRINTF_LONG_SUPPORT
+            char lng = 0;  /* 1 for long, 2 for long long */
+#endif
+            /* Init parameter struct */
+            p.lz = 0;
+            p.alt = 0;
+            p.width = 0;
+            p.align_left = 0;
+            p.sign = 0;
+
+            /* Flags */
+            while ((ch = *(fmt++))) {
+                switch (ch) {
+                case '-':
+                    p.align_left = 1;
+                    continue;
+                case '0':
+                    p.lz = 1;
+                    continue;
+                case '#':
+                    p.alt = 1;
+                    continue;
+                default:
+                    break;
+                }
+                break;
+            }
+
+            /* Width */
+            if (ch >= '0' && ch <= '9') {
+                ch = a2u(ch, &fmt, 10, &(p.width));
+            }
+
+            /* We accept 'x.y' format but don't support it completely:
+             * we ignore the 'y' digit => this ignores 0-fill
+             * size and makes it == width (ie. 'x') */
+            if (ch == '.') {
+                p.lz = 1;  /* zero-padding */
+                /* ignore actual 0-fill size: */
+                do {
+                    ch = *(fmt++);
+                } while ((ch >= '0') && (ch <= '9'));
+            }
+
+#ifdef PRINTF_SIZE_T_SUPPORT
+# ifdef PRINTF_LONG_SUPPORT
+            if (ch == 'z') {
+                ch = *(fmt++);
+                if (sizeof(size_t) == sizeof(unsigned long int))
+                    lng = 1;
+#  ifdef PRINTF_LONG_LONG_SUPPORT
+                else if (sizeof(size_t) == sizeof(unsigned long long int))
+                    lng = 2;
+#  endif
+            }
+            else
+# endif
+#endif
+
+#ifdef PRINTF_LONG_SUPPORT
+                if (ch == 'l') {
+                    ch = *(fmt++);
+                    lng = 1;
+#ifdef PRINTF_LONG_LONG_SUPPORT
+                    if (ch == 'l') {
+                        ch = *(fmt++);
+                        lng = 2;
+                    }
+#endif
+                }
+#endif
+            switch (ch) {
+            case 0:
+                goto abort;
+            case 'u':
+                p.base = 10;
+#ifdef PRINTF_LONG_SUPPORT
+#ifdef PRINTF_LONG_LONG_SUPPORT
+                if (2 == lng)
+                    ulli2a(va_arg(va, unsigned long long int), &p);
+                else
+#endif
+                    if (1 == lng)
+                        uli2a(va_arg(va, unsigned long int), &p);
+                    else
+#endif
+                        ui2a(va_arg(va, unsigned int), &p);
+                putchw(putp, putf, &p);
+                break;
+            case 'd':
+            case 'i':
+                p.base = 10;
+#ifdef PRINTF_LONG_SUPPORT
+#ifdef PRINTF_LONG_LONG_SUPPORT
+                if (2 == lng)
+                    lli2a(va_arg(va, long long int), &p);
+                else
+#endif
+                    if (1 == lng)
+                        li2a(va_arg(va, long int), &p);
+                    else
+#endif
+                        i2a(va_arg(va, int), &p);
+                putchw(putp, putf, &p);
+                break;
+#ifdef SIZEOF_POINTER
+            case 'p':
+                p.alt = 1;
+# if defined(SIZEOF_INT) && SIZEOF_POINTER <= SIZEOF_INT
+                lng = 0;
+# elif defined(SIZEOF_LONG) && SIZEOF_POINTER <= SIZEOF_LONG
+                lng = 1;
+# elif defined(SIZEOF_LONG_LONG) && SIZEOF_POINTER <= SIZEOF_LONG_LONG
+                lng = 2;
+# endif
+#endif
+            case 'x':
+            case 'X':
+                p.base = 16;
+                p.uc = (ch == 'X') ? 1 : 0;
+#ifdef PRINTF_LONG_SUPPORT
+#ifdef PRINTF_LONG_LONG_SUPPORT
+                if (2 == lng)
+                    ulli2a(va_arg(va, unsigned long long int), &p);
+                else
+#endif
+                    if (1 == lng)
+                        uli2a(va_arg(va, unsigned long int), &p);
+                    else
+#endif
+                        ui2a(va_arg(va, unsigned int), &p);
+                putchw(putp, putf, &p);
+                break;
+            case 'o':
+                p.base = 8;
+                ui2a(va_arg(va, unsigned int), &p);
+                putchw(putp, putf, &p);
+                break;
+            case 'c':
+                putf(putp, (char)(va_arg(va, int)));
+                break;
+            case 's':
+                p.bf = va_arg(va, char*);
+                putchw(putp, putf, &p);
+                p.bf = bf;
+                break;
+            case '%':
+                putf(putp, ch);
+            default:
+                break;
+            }
+        }
+    }
+abort:;
+}
+
+static void _vsnprintf_putcf(void* p, char c)
+{
+    struct _vsnprintf_putcf_data* data = (struct _vsnprintf_putcf_data*)p;
+    if (data->num_chars < data->dest_capacity)
+        data->dest[data->num_chars] = c;
+    data->num_chars++;
+}
+
+int tfp_vsnprintf(char* str, size_t size, const char* format, va_list ap)
+{
+    struct _vsnprintf_putcf_data data;
+
+    if (size < 1)
+        return 0;
+
+    data.dest = str;
+    data.dest_capacity = size - 1;
+    data.num_chars = 0;
+    tfp_format(&data, _vsnprintf_putcf, format, ap);
+
+    if (data.num_chars < data.dest_capacity)
+        data.dest[data.num_chars] = '\0';
+    else
+        data.dest[data.dest_capacity] = '\0';
+
+    return data.num_chars;
+}
+
+UCHAR inportb(_In_ USHORT Port)
+{
+    return __inbyte(Port) & 0xff;
+}
+
+void outportb(_In_ USHORT Port, _In_ UCHAR Data)
+{
+    __outbyte(Port, Data);
+}
+
+//通过串口发送字符数据
+void sendchar2(char c)
+{
+    char x;
+
+    if (c == '\r')
+        return;
+
+    //检查串口发送器是否空闲
+    //0x3FD线路状态寄存器 显示串口发送/接收状态
+    x = inportb(0x3f8 + 5);
+    //while ((x & 0x20) != 0x20)
+    while ((x & 0x40) != 0x40)  //bit6 为1表示发送数据完全移出，发送器完全空闲。
+        x = inportb(0x3f8 + 5);
+
+    outportb(0x3f8, c);  //发送数据
+
+    if (c == '\n') //检查字符是否是换行符
+    {
+        //检查串口数据是否发送完毕
+        x = inportb(0x3f8 + 5);
+        while ((x & 0x20) != 0x20)
+            x = inportb(0x3f8 + 5);
+
+        outportb(0x3f8, '\r'); //若字符是换行符则发送回车符(将光标移到行首)
+    }
+
+
+}
+
+//通过串口打印日志
+void Log(const char* format, ...)
+{
+    int sl, i;
+
+    va_list args;
+    va_start(args, format);
+    char message[1024] = { 0 };
+    sl = tfp_vsnprintf(message, sizeof(message), format, args);
+    va_end(args);
+
+    spinlock::lock(&sendstring_lock);
+
+    if (sl > 0)
+    {
+        for (i = 0; i < sl; i++)
+            sendchar2(message[i]);
+    }
+
+    spinlock::unlock(&sendstring_lock);
+}

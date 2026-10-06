@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Common">
+      <UniqueIdentifier>{fa4dee8a-81d1-4c2d-b63a-704ac62dfb8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common">
+      <UniqueIdentifier>{202f01ed-b492-41a8-a404-fc767a13b3d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\FileSystem">
+      <UniqueIdentifier>{ef055613-796c-49f1-8fef-292826e4077b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\FileSystem">
+      <UniqueIdentifier>{1053477f-76b5-4ad0-91a8-d9b717d085c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Hash">
+      <UniqueIdentifier>{e5af6465-ebce-4a6f-96fb-9c4a3f6e3adc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common\Hash\MD5">
+      <UniqueIdentifier>{61557e75-ca52-49d5-863e-125f4987cc15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Hash">
+      <UniqueIdentifier>{1a109e4c-e165-484c-b307-e6f7418fd72e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common\Hash\MD5">
+      <UniqueIdentifier>{98a4fb06-ac30-4ea1-9240-43dba8c8b9c9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbols.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\FileSystem\FileSystem.cpp">
+      <Filter>源文件\Common\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Hash\MD5\MD5.cpp">
+      <Filter>源文件\Common\Hash\MD5</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WinMain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbols.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\FileSystem\FileSystem.h">
+      <Filter>头文件\Common\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Hash\MD5\MD5.h">
+      <Filter>头文件\Common\Hash\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Loader.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\UnrealDbg_Icon.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
